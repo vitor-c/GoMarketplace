@@ -1,7 +1,5 @@
-import React, { useState, useMemo } from 'react';
-
+import React, { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {
   Container,
@@ -12,15 +10,10 @@ import {
 } from './styles';
 
 import formatValue from '../../utils/formatValue';
-
 import { useCart } from '../../hooks/cart';
-
-// Calculo do total
-// Navegação no clique do TouchableHighlight
 
 const FloatingCart: React.FC = () => {
   const { products } = useCart();
-
   const navigation = useNavigation();
 
   const cartTotal = useMemo(() => {

@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-
-import { View, Image } from 'react-native';
-
+import { View } from 'react-native';
 import formatValue from '../../utils/formatValue';
 import { useCart } from '../../hooks/cart';
 import api from '../../services/api';
-
 import FloatingCart from '../../components/FloatingCart';
 
 import {
@@ -30,27 +27,18 @@ interface Product {
 
 const Dashboard: React.FC = () => {
   const { addToCart } = useCart();
-
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
-      const res = await api.get('/products');
+      const response = await api.get('/products');
 
-      if (res) {
-        setProducts(res.data);
+      if (response) {
+        setProducts(response.data);
       }
     }
-
     loadProducts();
   }, []);
-
-  const handleAddToCart = useCallback(
-    (item: Product) => {
-      addToCart(item);
-    },
-    [addToCart],
-  );
 
   return (
     <Container>
@@ -70,9 +58,9 @@ const Dashboard: React.FC = () => {
                 <ProductPrice>{formatValue(item.price)}</ProductPrice>
                 <ProductButton
                   testID={`add-to-cart-${item.id}`}
-                  onPress={() => handleAddToCart(item)}
+                  onPress={() => addToCart(item)}
                 >
-                  <FeatherIcon size={20} name="plus" color="#C4C4C4" />
+                  <FeatherIcon size={20} name="check" color="#C4C4C4" />
                 </ProductButton>
               </PriceContainer>
             </Product>
